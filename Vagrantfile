@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "vm-lab-automation/p4-tutorial"
+  
+    config.ssh.insert_key = true
+    config.ssh.username = "p4"
+    config.ssh.password = "p4"
+
+  
+    config.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+
+      vb.memory = "2048"
+    end
+    
+    config.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      sudo mkdir /provisionfiles
+      cd /provisionfiles
+      curl -fsSL https://get.docker.com -o get-docker.sh
+      sudo sh get-docker.sh
+      
+      curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      sudo apt-get update && sudo apt-get install -y consul
+  
+  
+    SHELL
+  end
+  
