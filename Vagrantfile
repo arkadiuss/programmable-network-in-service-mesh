@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     config.ssh.username = "p4"
     config.ssh.password = "p4"
 
+    config.vm.synced_folder "src", "/home/p4/src"
   
     config.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -26,7 +27,8 @@ Vagrant.configure("2") do |config|
       sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
       sudo apt-get update && sudo apt-get install -y consul
   
-  
+      sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      sudo chmod +x /usr/local/bin/docker-compose
     SHELL
   end
   
