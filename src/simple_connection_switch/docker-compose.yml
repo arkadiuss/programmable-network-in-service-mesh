@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  server:
+    image: nginx
+    container_name: simple_connection_switch_server
+    network_mode: none
+  
+  client:
+    image: curlimages/curl
+    container_name: simple_connection_switch_client
+    network_mode: none
+    volumes:
+      - ./client.sh:/usr/bin/client.sh
+    entrypoint: 
+      - /bin/sh
+      - /usr/bin/client.sh
