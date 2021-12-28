@@ -11,6 +11,8 @@ CLIENT_NETWORK_NAME="${CLIENT_NAME}_net"
 CLIENT_VETH_INTERNAL_NAME="veth_c1"
 CLIENT_VETH_EXTERNAL_NAME="client_veth"
 
+ip link delete $SERVER_VETH_EXTERNAL_NAME
+ip link delete $CLIENT_VETH_EXTERNAL_NAME
 ip netns delete $SERVER_NETWORK_NAME
 ip netns delete $CLIENT_NETWORK_NAME
 
@@ -23,8 +25,6 @@ echo "Client PID: $client_pid"
 ln -sfT /proc/${client_pid}/ns/net /var/run/netns/$CLIENT_NETWORK_NAME
 
 echo "Creating veths"
-sudo ip link delete $SERVER_VETH_EXTERNAL_NAME
-sudo ip link delete $CLIENT_VETH_EXTERNAL_NAME
 ip link add $SERVER_VETH_INTERNAL_NAME type veth peer name $SERVER_VETH_EXTERNAL_NAME
 ip link add $CLIENT_VETH_INTERNAL_NAME type veth peer name $CLIENT_VETH_EXTERNAL_NAME
 echo "Current ns"
@@ -34,18 +34,17 @@ ip link set $SERVER_VETH_INTERNAL_NAME netns $SERVER_NETWORK_NAME
 ip link set $CLIENT_VETH_INTERNAL_NAME netns $CLIENT_NETWORK_NAME
 echo "setting Ip addresses"
 ip netns exec $SERVER_NETWORK_NAME ip addr flush dev $SERVER_VETH_INTERNAL_NAME
-ip netns exec $SERVER_NETWORK_NAME ip addr add 10.2.1.2/24 dev $SERVER_VETH_INTERNAL_NAME
+ip netns exec $SERVER_NETWORK_NAME ip addr add 10.2.1.1/24 dev $SERVER_VETH_INTERNAL_NAME
 ip netns exec $SERVER_NETWORK_NAME ip link set $SERVER_VETH_INTERNAL_NAME up
-ip addr flush dev $SERVER_VETH_EXTERNAL_NAME
-ip addr add 10.2.1.1/24 dev $SERVER_VETH_EXTERNAL_NAME
+# ip netns exec $SERVER_NETWORK_NAME ip route add 10.2.1.0/24 via 10.2.1.254 dev $SERVER_VETH_INTERNAL_NAME
 ip link set $SERVER_VETH_EXTERNAL_NAME up
 
 ip netns exec $CLIENT_NETWORK_NAME ip addr flush dev $CLIENT_VETH_INTERNAL_NAME
-ip netns exec $CLIENT_NETWORK_NAME ip addr add 10.2.2.2/24 dev $CLIENT_VETH_INTERNAL_NAME
+ip netns exec $CLIENT_NETWORK_NAME ip addr add 10.2.1.2/24 dev $CLIENT_VETH_INTERNAL_NAME
 ip netns exec $CLIENT_NETWORK_NAME ip link set $CLIENT_VETH_INTERNAL_NAME up
-ip addr flush dev $CLIENT_VETH_EXTERNAL_NAME
-ip addr add 10.2.2.1/24 dev $CLIENT_VETH_EXTERNAL_NAME
+# ip netns exec $CLIENT_NETWORK_NAME ip route add 10.2.1.0/24 via 10.2.1.254 dev $CLIENT_VETH_INTERNAL_NAME
 ip link set $CLIENT_VETH_EXTERNAL_NAME up
+
 echo "Final conf"
 ip netns exec $SERVER_NETWORK_NAME ip addr
 ip netns exec $CLIENT_NETWORK_NAME ip addr
