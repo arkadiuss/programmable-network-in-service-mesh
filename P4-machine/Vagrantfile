@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     config.ssh.username = "p4"
     config.ssh.password = "p4"
 
-    config.vm.synced_folder "src", "/home/p4/src"
+    config.vm.synced_folder "../src", "/home/p4/src"
   
     config.vm.provider "virtualbox" do |vb|
       vb.gui = false
