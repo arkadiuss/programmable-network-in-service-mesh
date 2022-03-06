@@ -1,0 +1,13 @@
+version: '3.6'
+
+services:
+  h1:
+    build:
+      dockerfile: Dockerfile.H1
+      context: .
+      args:
+        PUBLIC_API_TAG: v0.0.6
+        FRONTEND_TAG: v1.0.1
+    ports:
+      - 17564:17564
+      - 20863:20863
