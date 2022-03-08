@@ -1,0 +1,5 @@
+{
+    "db_connection": "host=db1 port=5432 user=dbuser1 password=supersecret dbname=products sslmode=disable",
+    "bind_address": "0.0.0.0:19572",
+    "metrics_address": "localhost:9102"
+}

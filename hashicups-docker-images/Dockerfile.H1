@@ -18,7 +18,8 @@ RUN git clone https://github.com/hashicorp-demoapp/frontend.git
 WORKDIR /code/frontend
 RUN git checkout tags/$FRONTEND_TAG -b release
 RUN yarn install
-ENV NEXT_PUBLIC_PUBLIC_API_URL=" "
+# trick below: NEXT_PUBLIC_PUBLIC_API_URL seems to be set but is empty, empty value evaluates to undefined 
+ENV NEXT_PUBLIC_PUBLIC_API_URL=" " 
 RUN yarn build
  
 COPY H1/next.config.js .

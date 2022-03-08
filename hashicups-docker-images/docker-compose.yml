@@ -11,3 +11,21 @@ services:
     ports:
       - 17564:17564
       - 20863:20863
+    depends_on:
+      - h2
+
+  h2:
+    build:
+      dockerfile: Dockerfile.H2
+      context: .
+      args:
+        PRODUCT_API_TAG: v0.0.20
+    ports:
+      - 19572:19572
+
+  db1:
+    build:
+      dockerfile: Dockerfile.DB1
+      context: .
+    ports:
+      - 5432:5432

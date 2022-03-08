@@ -1,0 +1,7 @@
+FROM postgres:14.2
+
+ENV POSTGRES_USER=dbuser1
+ENV POSTGRES_PASSWORD=supersecret
+ENV POSTGRES_DB=products
+
+COPY DB1/products.sql /docker-entrypoint-initdb.d/
