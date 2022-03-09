@@ -1,0 +1,5 @@
+ARG PAYMENT_API_TAG
+FROM hashicorpdemoapp/payment-api:$PAYMENT_API_TAG
+
+
+ENTRYPOINT [ "/app/payment-api" ]
