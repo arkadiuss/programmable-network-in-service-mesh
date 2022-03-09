@@ -23,6 +23,15 @@ services:
     ports:
       - 19572:19572
 
+  h3:
+    build:
+      dockerfile: Dockerfile.H3
+      context: .
+      args:
+        PAYMENT_API_TAG: v0.0.16
+    ports:
+      - 13427:13427
+
   db1:
     build:
       dockerfile: Dockerfile.DB1
