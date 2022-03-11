@@ -8,6 +8,10 @@ services:
       args:
         PUBLIC_API_TAG: v0.0.6
         FRONTEND_TAG: v1.0.1
+    environment:
+      - PUBLIC_API_URI=http://h1:20863
+      - PRODUCT_API_URI=http://h2:19572
+      - PAYMENT_API_URI=http://h3:13427
     ports:
       - 17564:17564
       - 20863:20863

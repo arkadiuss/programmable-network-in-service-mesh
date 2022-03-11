@@ -3,5 +3,5 @@ FROM hashicorpdemoapp/product-api:$PRODUCT_API_TAG
 
 COPY H2/conf.json /conf.json
 
-ENV BASE_ADDRESS=:19572
+ENV BIND_ADDRESS=:19572
 ENTRYPOINT [ "/app/product-api" ]
