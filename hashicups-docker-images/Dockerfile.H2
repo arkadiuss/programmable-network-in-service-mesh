@@ -2,6 +2,7 @@ ARG PRODUCT_API_TAG
 FROM hashicorpdemoapp/product-api:$PRODUCT_API_TAG
 
 COPY H2/conf.json /conf.json
+COPY H2/product-api.hcl /register/product-api.hcl
 
 ENV BIND_ADDRESS=:19572
 ENTRYPOINT [ "/app/product-api" ]

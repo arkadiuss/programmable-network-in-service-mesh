@@ -3,5 +3,6 @@ FROM hashicorpdemoapp/payments:$PAYMENT_API_TAG
 ARG PAYMENT_API_TAG
 
 RUN mv ./spring-boot-payments-${PAYMENT_API_TAG:1}.jar ./spring-boot-payments.jar 
+COPY H3/payments-api.hcl /register/payments-api.hcl
 
 CMD java -jar -Dserver.port=13427 ./spring-boot-payments.jar 

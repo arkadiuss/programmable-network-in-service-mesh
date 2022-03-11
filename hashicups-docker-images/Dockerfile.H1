@@ -32,6 +32,10 @@ COPY H1/nginx.conf /etc/nginx/conf.d/default.conf.template
 COPY --from=public-api-build /code/public-api/bin/public-api /bin/public-api
 COPY --from=frontend-build /code/frontend/out/ /usr/share/nginx/html
 COPY H1/docker-entrypoint.sh /
+COPY H1/frontend.hcl /register/frontend.hcl
+COPY H1/frontend.json /register/frontend.json
+COPY H1/public-api.hcl /register/public-api.hcl
+
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 ENV BIND_ADDRESS=:20863

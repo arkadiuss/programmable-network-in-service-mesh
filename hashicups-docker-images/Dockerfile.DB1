@@ -5,3 +5,4 @@ ENV POSTGRES_PASSWORD=supersecret
 ENV POSTGRES_DB=products
 
 COPY DB1/products.sql /docker-entrypoint-initdb.d/
+COPY DB1/db.hcl /register/db.hcl

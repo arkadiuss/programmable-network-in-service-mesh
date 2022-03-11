@@ -17,6 +17,7 @@ services:
       - 20863:20863
     depends_on:
       - h2
+      - h3
 
   h2:
     build:
@@ -42,3 +43,11 @@ services:
       context: .
     ports:
       - 5432:5432
+
+  consul:
+    image: consul:1.11
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    command: ["consul", "agent", "-dev", "-client=0.0.0.0"]
+    ports:
+      - 8500:8500
