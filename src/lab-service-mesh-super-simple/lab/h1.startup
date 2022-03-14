@@ -1,0 +1,5 @@
+ifconfig eth0 192.168.1.11/24 up
+
+export BIND_ADDRESS=:20863
+export PUBLIC_API_URI=localhost:20863
+

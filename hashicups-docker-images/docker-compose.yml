@@ -2,6 +2,7 @@ version: '3.6'
 
 services:
   h1:
+    image: service-mesh-h1
     build:
       dockerfile: Dockerfile.H1
       context: .
@@ -24,6 +25,7 @@ services:
         ipv4_address: 192.168.1.11
 
   h2:
+    image: service-mesh-h2
     build:
       dockerfile: Dockerfile.H2
       context: .
@@ -39,6 +41,7 @@ services:
         ipv4_address: 192.168.1.12
 
   h3:
+    image: service-mesh-h3
     build:
       dockerfile: Dockerfile.H3
       context: .
@@ -53,6 +56,7 @@ services:
         ipv4_address: 192.168.1.13
 
   db1:
+    image: service-mesh-db1
     build:
       dockerfile: Dockerfile.DB1
       context: .

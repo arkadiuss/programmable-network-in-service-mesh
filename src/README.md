@@ -1,0 +1,1 @@
+The source code implements differents architectures and aims to implement certain service mesh concepts on those infrastructures. Utilizes bare linux networking and Kathara framework. All labs are designed to be run on either P4 or Kathara machine included in the repo.
