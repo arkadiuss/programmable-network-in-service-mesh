@@ -18,6 +18,10 @@ services:
     depends_on:
       - h2
       - h3
+      - consul-server
+    networks:
+      default:
+        ipv4_address: 192.168.1.11
 
   h2:
     build:
@@ -27,6 +31,12 @@ services:
         PRODUCT_API_TAG: v0.0.20
     ports:
       - 19572:19572
+    depends_on:
+      - db1
+      - consul-server
+    networks:
+      default:
+        ipv4_address: 192.168.1.12
 
   h3:
     build:
@@ -36,6 +46,11 @@ services:
         PAYMENT_API_TAG: v0.0.16
     ports:
       - 13427:13427
+    depends_on:
+      - consul-server
+    networks:
+      default:
+        ipv4_address: 192.168.1.13
 
   db1:
     build:
@@ -43,11 +58,25 @@ services:
       context: .
     ports:
       - 5432:5432
+    depends_on:
+      - consul-server
+    networks:
+      default:
+        ipv4_address: 192.168.1.21
 
-  consul:
+  consul-server:
     image: consul:1.11
     environment:
       - CONSUL_BIND_INTERFACE=eth0
-    command: ["consul", "agent", "-dev", "-client=0.0.0.0"]
+    command: ["consul", "agent", "-dev", "-bind=192.168.1.250", "-client=0.0.0.0"]
     ports:
       - 8500:8500
+    networks:
+      default:
+        ipv4_address: 192.168.1.250
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24

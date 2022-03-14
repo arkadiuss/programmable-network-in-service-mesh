@@ -5,4 +5,6 @@ envsubst '${PUBLIC_API_URI}' < /etc/nginx/conf.d/default.conf.template > /etc/ng
 
 nginx
 
+consul agent -server=false -join=consul-server -data-dir=/var/consul &
+
 exec "$@"

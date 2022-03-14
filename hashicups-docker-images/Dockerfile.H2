@@ -1,8 +1,15 @@
 ARG PRODUCT_API_TAG
+FROM consul:1.11 as consul-build
+
 FROM hashicorpdemoapp/product-api:$PRODUCT_API_TAG
 
 COPY H2/conf.json /conf.json
 COPY H2/product-api.hcl /register/product-api.hcl
+COPY H2/docker-entrypoint.sh /
+COPY --from=consul-build /bin/consul /bin/consul 
 
 ENV BIND_ADDRESS=:19572
-ENTRYPOINT [ "/app/product-api" ]
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD [ "/app/product-api" ]

@@ -1,3 +1,5 @@
+FROM consul:1.11 as consul-build
+
 FROM postgres:14.2
 
 ENV POSTGRES_USER=dbuser1
@@ -6,3 +8,4 @@ ENV POSTGRES_DB=products
 
 COPY DB1/products.sql /docker-entrypoint-initdb.d/
 COPY DB1/db.hcl /register/db.hcl
+COPY --from=consul-build /bin/consul /bin/consul 
