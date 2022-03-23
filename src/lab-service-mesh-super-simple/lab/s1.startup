@@ -1,0 +1,6 @@
+ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633
+ovs-vswitchd --detach --pidfile --log-file
+ovs-vsctl add-br s1
+ovs-vsctl add-port s1 eth0
+ovs-vsctl add-port s1 eth1
+ovs-ofctl add-flow s1 priority=5,dl_type=0x0800,nw_proto=6,ip_dst=192.168.1.250,tp_dst=8080,actions=mod_nw_dst=192.168.1.12,mod_tp_dst:13427,output:2

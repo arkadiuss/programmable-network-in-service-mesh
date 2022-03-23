@@ -1,0 +1,41 @@
+#! /bin/sh
+# Remember to use 'chmod +x' (o 'chmod 500') on the .sh file. The script will self-destruct
+
+rm -rf "$(dirname "$0")/lab"
+mkdir "$(dirname "$0")/lab"
+cd "$(dirname "$0")/lab"
+mkdir -p h1
+mkdir -p h3
+mkdir -p s1
+
+touch lab.conf
+echo 'LAB_DESCRIPTION="Two host architecture to test service discovery"' >> lab.conf
+echo 'LAB_VERSION="0.1"' >> lab.conf
+echo 'LAB_AUTHOR="A. Kraus"' >> lab.conf
+echo 'LAB_EMAIL="akraus@student.agh.edu.pl"' >> lab.conf
+echo 'h1[0]=A' >> lab.conf
+echo 'h3[0]=B' >> lab.conf
+echo 's1[0]=A' >> lab.conf
+echo 's1[1]=B' >> lab.conf
+echo 's1[2]=controller' >> lab.conf
+echo 'h1[image]="service-mesh-h1"' >> lab.conf
+echo 'h3[image]="service-mesh-h3"' >> lab.conf
+echo 's1[image]="kathara/sdn"' >> lab.conf
+
+touch h1.startup
+echo 'ifconfig eth0 192.168.1.11 up' >> h1.startup
+echo 'arp -s 192.168.1.250 00:00:00:00:00:11' >> h1.startup
+
+touch h3.startup
+echo 'ifconfig eth0 192.168.1.12 up' >> h3.startup
+echo 'arp -s 192.168.1.250 00:00:00:00:00:11' >> h3.startup
+
+touch s1.startup
+echo 'ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633' >> s1.startup
+echo 'ovs-vswitchd --detach --pidfile --log-file' >> s1.startup
+echo 'ovs-vsctl add-br s1' >> s1.startup
+echo 'ovs-vsctl add-port s1 eth0' >> s1.startup
+echo 'ovs-vsctl add-port s1 eth1' >> s1.startup
+echo 'ovs-ofctl add-flow s1 priority=5,dl_type=0x0800,nw_proto=6,ip_dst=192.168.1.250,tp_dst=8080,actions=mod_nw_dst=192.168.1.12,mod_tp_dst:13427,output:2' >> s1.startup
+
+# rm "../$0"

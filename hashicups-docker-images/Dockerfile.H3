@@ -4,6 +4,8 @@ FROM consul:1.11 as consul-build
 FROM hashicorpdemoapp/payments:$PAYMENT_API_TAG
 ARG PAYMENT_API_TAG
 
+RUN apk add bash tcpdump strace
+
 RUN mv ./spring-boot-payments-${PAYMENT_API_TAG:1}.jar ./spring-boot-payments.jar 
 COPY --from=consul-build /bin/consul /bin/consul 
 COPY H3/payments-api.hcl /register/payments-api.hcl
