@@ -1,8 +1,0 @@
-ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633
-ovs-vswitchd --detach --pidfile --log-file
-ovs-vsctl add-br s1
-ovs-vsctl add-port s1 eth0
-ovs-vsctl add-port s1 eth1
-ovs-ofctl add-flow s1 "priority=50,in_port=1,tcp,action=ct(commit,zone=1,nat(dst=192.168.1.12:13427)),mod_dl_dst:00:00:00:00:00:02,output:2"
-ovs-ofctl add-flow s1 "priority=50,in_port=2,ct_state=-trk,tcp,action=ct(table=0,zone=1,nat)"
-ovs-ofctl add-flow s1 "priority=50,in_port=2,ct_state=+est,ct_zone=1,tcp,action=1"
