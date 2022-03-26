@@ -23,12 +23,14 @@ echo 'h3[image]="service-mesh-h3"' >> lab.conf
 echo 's1[image]="kathara/sdn"' >> lab.conf
 
 touch h1.startup
+echo 'ip link set eth0 address 00:00:00:00:00:01' >> h1.startup
 echo 'ifconfig eth0 192.168.1.11 up' >> h1.startup
-echo 'arp -s 192.168.1.250 00:00:00:00:00:11' >> h1.startup
+echo 'arp -s 192.168.1.250 00:00:00:ff:ff:ff' >> h1.startup
 
 touch h3.startup
+echo 'ip link set eth0 address 00:00:00:00:00:02' >> h3.startup
 echo 'ifconfig eth0 192.168.1.12 up' >> h3.startup
-echo 'arp -s 192.168.1.250 00:00:00:00:00:11' >> h3.startup
+echo 'arp -s 192.168.1.250 00:00:00:ff:ff:ff' >> h3.startup
 
 touch s1.startup
 echo 'ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633' >> s1.startup
@@ -36,6 +38,8 @@ echo 'ovs-vswitchd --detach --pidfile --log-file' >> s1.startup
 echo 'ovs-vsctl add-br s1' >> s1.startup
 echo 'ovs-vsctl add-port s1 eth0' >> s1.startup
 echo 'ovs-vsctl add-port s1 eth1' >> s1.startup
-echo 'ovs-ofctl add-flow s1 priority=5,dl_type=0x0800,nw_proto=6,ip_dst=192.168.1.250,tp_dst=8080,actions=mod_nw_dst=192.168.1.12,mod_tp_dst:13427,output:2' >> s1.startup
+echo 'ovs-ofctl add-flow s1 "priority=50,in_port=1,tcp,action=ct(commit,zone=1,nat(dst=192.168.1.12:13427)),mod_dl_dst:00:00:00:00:00:02,output:2"' >> s1.startup
+echo 'ovs-ofctl add-flow s1 "priority=50,in_port=2,ct_state=-trk,tcp,action=ct(table=0,zone=1,nat)"' >> s1.startup
+echo 'ovs-ofctl add-flow s1 "priority=50,in_port=2,ct_state=+est,ct_zone=1,tcp,action=1"' >> s1.startup
 
 # rm "../$0"
