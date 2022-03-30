@@ -1,4 +1,4 @@
-The small subset of HashiCups app reference architecture, just to test simple service discovery. Designed to run on the Kathara machine. Created throught NetkitLabGenerator but scripts was modified because of errors in it. 
+The small subset of HashiCups app reference architecture, just to test simple service discovery. Designed to run on the Kathara machine. 
 
 ![Topology](./topology.png)
 
@@ -8,3 +8,16 @@ ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ip_dst=192.168.1.250,tp_dst=808
 ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ct_state=-trk,action=ct(table=0,zone=1,nat)"
 ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"
 ```
+
+## Running
+```
+sudo ./prepare.sh
+./run.sh
+```
+
+To test on h1 call:
+```
+curl 192.168.1.250:8080
+```
+
+The response should be ok.
