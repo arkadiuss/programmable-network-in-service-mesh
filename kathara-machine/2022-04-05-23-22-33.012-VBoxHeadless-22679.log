@@ -1,0 +1,12 @@
+Log created: 2022-04-05T23:22:33.127108000Z
+Process ID:  22679 (0x5897)
+Parent PID:  1887 (0x75f)
+Executable:  /usr/lib64/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib64/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: kathara-machine_default_1646511579589_43728
+Arg[3]: --startvm
+Arg[4]: 49d6fd58-297e-4c57-b188-65c973332a3f
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2

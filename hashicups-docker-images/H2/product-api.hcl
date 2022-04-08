@@ -2,6 +2,7 @@ service {
   name = "product-api"
   id = "product-api"
   port = 19572
+  tags = ["app"]
  
   check {
      id =  "Product API",
@@ -10,5 +11,18 @@ service {
      tcp  = "localhost:19572",
      interval = "1s",
      timeout = "3s"
+  }
+
+  connect {
+    sidecar_service {
+      proxy {
+        upstreams = [
+          {
+            destination_name = "product-db"
+            local_bind_port = 9567
+          }
+        ]
+      }
+    }
   }
 }

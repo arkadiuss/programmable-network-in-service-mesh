@@ -2,6 +2,7 @@ service {
   name = "payments"
   id = "payments"
   port = 13427
+  tags = ["app"]
 
   check {
     id =  "Payment",

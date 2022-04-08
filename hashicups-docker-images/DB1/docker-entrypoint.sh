@@ -3,4 +3,7 @@ set -eu
 
 consul agent -server=false -join=consul-server -data-dir=/var/consul &
 
+sleep 10
+consul services register /register/db.hcl
+
 exec "$@"

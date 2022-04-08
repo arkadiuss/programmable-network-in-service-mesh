@@ -6,6 +6,9 @@ envsubst '${PUBLIC_API_URI}' < /etc/nginx/conf.d/default.conf.template > /etc/ng
 
 nginx
 
-# consul agent -server=false -join=consul-server -data-dir=/var/consul &
+consul agent -server=false -join=consul-server -data-dir=/var/consul &
 
+sleep 10
+consul services register /register/frontend.hcl
+consul services register /register/public-api.hcl
 exec "$@"
