@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-consul agent -server=false -join=consul-server -data-dir=/var/consul &
+sleep 10
+consul agent -server=false -join=192.168.1.200 -data-dir=/var/consul &
 
 sleep 10
 consul services register /register/payments-api.hcl

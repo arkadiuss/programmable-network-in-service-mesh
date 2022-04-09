@@ -19,7 +19,7 @@ services:
     depends_on:
       - h2
       - h3
-      - consul-server
+      - consul_server
     networks:
       default:
         ipv4_address: 192.168.1.11
@@ -35,7 +35,7 @@ services:
       - 19572:19572
     depends_on:
       - db1
-      - consul-server
+      - consul_server
     networks:
       default:
         ipv4_address: 192.168.1.12
@@ -50,7 +50,7 @@ services:
     ports:
       - 13427:13427
     depends_on:
-      - consul-server
+      - consul_server
     networks:
       default:
         ipv4_address: 192.168.1.13
@@ -63,21 +63,22 @@ services:
     ports:
       - 5432:5432
     depends_on:
-      - consul-server
+      - consul_server
     networks:
       default:
         ipv4_address: 192.168.1.21
 
-  consul-server:
-    image: consul:1.11
-    environment:
-      - CONSUL_BIND_INTERFACE=eth0
-    command: ["consul", "agent", "-dev", "-bind=192.168.1.250", "-client=0.0.0.0"]
+  consul_server:
+    image: service-mesh-consul
+    build:
+      dockerfile: Dockerfile.consul
+      context: .
+    command: ["consul", "agent", "-dev", "-bind=192.168.1.200", "-client=0.0.0.0"]
     ports:
       - 8500:8500
     networks:
       default:
-        ipv4_address: 192.168.1.250
+        ipv4_address: 192.168.1.200
 
 networks:
   default:

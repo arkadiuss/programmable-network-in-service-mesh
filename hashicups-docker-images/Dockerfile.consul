@@ -1,0 +1,6 @@
+FROM consul:1.11
+
+RUN apk add bash
+ENV CONSUL_BIND_INTERFACE=eth0
+
+ENTRYPOINT ["sleep", "1000"]

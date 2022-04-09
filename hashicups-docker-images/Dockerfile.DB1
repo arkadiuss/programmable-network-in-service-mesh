@@ -2,6 +2,8 @@ FROM consul:1.11 as consul-build
 
 FROM postgres:14.2
 
+RUN apt-get update && apt-get install -y bash tcpdump strace net-tools iproute2
+
 ENV POSTGRES_USER=dbuser1
 ENV POSTGRES_PASSWORD=supersecret
 ENV POSTGRES_DB=products

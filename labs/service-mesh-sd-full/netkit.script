@@ -1,0 +1,107 @@
+#! /bin/sh
+# Remember to use 'chmod +x' (o 'chmod 500') on the .sh file
+
+rm -rf "$(dirname "$0")/lab"
+mkdir "$(dirname "$0")/lab"
+cd "$(dirname "$0")/lab"
+mkdir -p h1
+mkdir -p h2
+mkdir -p h3
+mkdir -p db1
+mkdir -p s1
+mkdir -p s2
+mkdir -p s3
+mkdir -p consul_server
+mkdir -p s1/etc/scripts/
+
+touch lab.conf
+echo 'LAB_DESCRIPTION="service-mesh-lab-base"' >> lab.conf
+echo 'LAB_VERSION="0.1"' >> lab.conf
+echo 'LAB_AUTHOR="A. Kraus"' >> lab.conf
+echo 'LAB_EMAIL="akraus@student.agh.edu.pl"' >> lab.conf
+echo 'h1[0]=A' >> lab.conf
+echo 'h2[0]=B' >> lab.conf
+echo 'h3[0]=C' >> lab.conf
+echo 'db1[0]=D' >> lab.conf
+echo 's1[0]=A' >> lab.conf
+echo 's1[1]=B' >> lab.conf
+echo 's1[2]=E' >> lab.conf
+echo 's2[0]=C' >> lab.conf
+echo 's2[1]=D' >> lab.conf
+echo 's2[2]=F' >> lab.conf
+echo 's3[0]=E' >> lab.conf
+echo 's3[1]=F' >> lab.conf
+echo 's3[2]=G' >> lab.conf
+echo 'consul_server[0]=G' >> lab.conf
+echo 'h1[image]="service-mesh-h1"' >> lab.conf
+echo 'h2[image]="service-mesh-h2"' >> lab.conf
+echo 'h3[image]="service-mesh-h3"' >> lab.conf
+echo 'db1[image]="service-mesh-db1"' >> lab.conf
+echo 's1[image]="kathara/sdn"' >> lab.conf
+echo 's2[image]="kathara/sdn"' >> lab.conf
+echo 's3[image]="kathara/sdn"' >> lab.conf
+echo 'consul_server[image]="service-mesh-consul"' >> lab.conf
+
+touch h1.startup
+echo 'ip link set eth0 address  00:00:00:00:00:01' >> h1.startup
+echo 'ifconfig eth0 192.168.1.11 up' >> h1.startup
+echo 'arp -s 192.168.1.250 00:00:00:ff:ff:ff' >> h1.startup
+
+touch h2.startup
+echo 'ip link set eth0 address  00:00:00:00:00:02' >> h2.startup
+echo 'ifconfig eth0 192.168.1.12 up' >> h2.startup
+echo 'arp -s 192.168.1.250 00:00:00:ff:ff:ff' >> h2.startup
+
+touch h3.startup
+echo 'ip link set eth0 address  00:00:00:00:00:03' >> h3.startup
+echo 'ifconfig eth0 192.168.1.13 up' >> h3.startup
+echo 'arp -s 192.168.1.250 00:00:00:ff:ff:ff' >> h3.startup
+
+touch db1.startup
+echo 'ip link set eth0 address  00:00:00:00:00:04' >> db1.startup
+echo 'ifconfig eth0 192.168.1.21 up' >> db1.startup
+echo 'arp -s 192.168.1.250 00:00:00:ff:ff:ff' >> db1.startup
+
+touch s1.startup
+echo 'ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633' >> s1.startup
+echo 'ovs-vswitchd --detach --pidfile --log-file' >> s1.startup
+echo 'ovs-vsctl add-br s1' >> s1.startup
+echo 'ovs-vsctl add-port s1 eth0' >> s1.startup
+echo 'ovs-vsctl add-port s1 eth1' >> s1.startup
+echo 'ovs-vsctl add-port s1 eth2' >> s1.startup
+echo 'chmod +x /etc/scripts/add_flows.sh' >> s1.startup
+echo '/etc/scripts/add_flows.sh' >> s1.startup
+
+touch s2.startup
+echo 'ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633' >> s2.startup
+echo 'ovs-vswitchd --detach --pidfile --log-file' >> s2.startup
+echo 'ovs-vsctl add-br s1' >> s2.startup
+echo 'ovs-vsctl add-port s1 eth0' >> s2.startup
+echo 'ovs-vsctl add-port s1 eth1' >> s2.startup
+echo 'ovs-vsctl add-port s1 eth2' >> s2.startup
+
+touch s3.startup
+echo 'ovsdb-server --detach --pidfile --log-file --remote=punix:/var/run/openvswitch/db.sock --remote=ptcp:6633' >> s3.startup
+echo 'ovs-vswitchd --detach --pidfile --log-file' >> s3.startup
+echo 'ovs-vsctl add-br s1' >> s3.startup
+echo 'ovs-vsctl add-port s1 eth0' >> s3.startup
+echo 'ovs-vsctl add-port s1 eth1' >> s3.startup
+echo 'ovs-vsctl add-port s1 eth2' >> s3.startup
+
+touch consul_server.startup
+echo 'ifconfig eth0 192.168.1.200 up' >> consul_server.startup
+echo 'consul agent -dev -bind=192.168.1.200 -client=0.0.0.0' >> consul_server.startup
+
+touch s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ip_dst=192.168.1.250,tp_dst=9191,action=ct(commit,zone=1,nat(dst=192.168.1.11:20863)),mod_dl_dst:00:00:00:00:00:01,output:1"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ct_state=-trk,action=ct(table=0,zone=1,nat)"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ip_dst=192.168.1.250,tp_dst=9340,action=ct(commit,zone=1,nat(dst=192.168.1.13:13427)),mod_dl_dst:00:00:00:00:00:03,output:3"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=3,ct_state=-trk,action=ct(table=0,zone=1,nat)"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=3,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ip_dst=192.168.1.250,tp_dst=9341,action=ct(commit,zone=1,nat(dst=192.168.1.12:19572)),mod_dl_dst:00:00:00:00:00:02,output:2"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ct_state=-trk,action=ct(table=0,zone=1,nat)"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ip_dst=192.168.1.250,tp_dst=9567,action=ct(commit,zone=1,nat(dst=192.168.1.21:5432)),mod_dl_dst:00:00:00:00:00:04,output:3"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=3,ct_state=-trk,action=ct(table=0,zone=1,nat)"        ' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=3,ip_dst=192.168.1.12,ct_state=+est,ct_zone=1,action=2"' >> s1/etc/scripts/add_flows.sh

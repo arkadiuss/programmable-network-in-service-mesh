@@ -1,0 +1,3 @@
+ip link set eth0 address  00:00:00:00:00:02
+ifconfig eth0 192.168.1.12 up
+arp -s 192.168.1.250 00:00:00:ff:ff:ff
