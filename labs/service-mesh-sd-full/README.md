@@ -2,4 +2,14 @@ The full HashiCups app reference architecture, which shows the rules needed to b
 
 ![Topology](./topology.png)
 
-WIP
+
+## Run
+```
+sudo ./prepare.sh
+./run.sh
+```
+
+Best proof it works:
+```
+sudo docker exec <container_id> curl -Ss -X POST localhost:20863/api -H "Content-Type: application/json" --data '{"operationName":"GetCoffees", "variables":{},"query":"query GetCoffees {\n  coffees {\n    id\n    name\n    image\n    __typename\n  }\n}"}'
+```

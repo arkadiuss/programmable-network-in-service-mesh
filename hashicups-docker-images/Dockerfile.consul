@@ -3,5 +3,5 @@ FROM consul:1.11
 RUN apk add bash
 ENV CONSUL_BIND_INTERFACE=eth0
 
-# uncomment to make sd lab full working
-#ENTRYPOINT ["sleep", "1000"]
+# uncomment to make sd lab full working, and comment to make local lab working
+ENTRYPOINT ["sleep", "1000"]
