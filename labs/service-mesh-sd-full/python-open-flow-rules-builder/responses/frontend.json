@@ -1,0 +1,40 @@
+[
+    {
+        "ID": "a06b3953-c2de-77e7-9452-87cb4ee43802",
+        "Node": "da781e790f39",
+        "Address": "192.168.1.11",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.11",
+            "lan_ipv4": "192.168.1.11",
+            "wan": "192.168.1.11",
+            "wan_ipv4": "192.168.1.11"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "",
+        "ServiceID": "frontend",
+        "ServiceName": "frontend",
+        "ServiceTags": [
+            "app"
+        ],
+        "ServiceAddress": "",
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 17564,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "Mode": "",
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 27,
+        "ModifyIndex": 27
+    }
+]

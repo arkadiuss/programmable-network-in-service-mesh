@@ -1,0 +1,59 @@
+[
+    {
+        "ID": "c3bd9074-ae9f-49b2-988f-998f51ab3c25",
+        "Node": "adc87e055d56",
+        "Address": "192.168.1.12",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.12",
+            "lan_ipv4": "192.168.1.12",
+            "wan": "192.168.1.12",
+            "wan_ipv4": "192.168.1.12"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "connect-proxy",
+        "ServiceID": "product-api-sidecar-proxy",
+        "ServiceName": "product-api-sidecar-proxy",
+        "ServiceTags": [
+            "app"
+        ],
+        "ServiceAddress": "",
+        "ServiceTaggedAddresses": {
+            "consul-virtual": {
+                "Address": "240.0.0.1",
+                "Port": 21000
+            }
+        },
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 21000,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "DestinationServiceName": "product-api",
+            "DestinationServiceID": "product-api",
+            "LocalServiceAddress": "127.0.0.1",
+            "LocalServicePort": 19572,
+            "Mode": "",
+            "Upstreams": [
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "product-db",
+                    "Datacenter": "",
+                    "LocalBindPort": 9567,
+                    "MeshGateway": {}
+                }
+            ],
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 26,
+        "ModifyIndex": 26
+    }
+]

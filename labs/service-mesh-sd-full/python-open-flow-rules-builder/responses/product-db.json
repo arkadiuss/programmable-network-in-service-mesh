@@ -1,0 +1,38 @@
+[
+    {
+        "ID": "01cb2b11-eb6e-ba29-5121-1d7911d1a818",
+        "Node": "cced371814ae",
+        "Address": "192.168.1.21",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.21",
+            "lan_ipv4": "192.168.1.21",
+            "wan": "192.168.1.21",
+            "wan_ipv4": "192.168.1.21"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "",
+        "ServiceID": "product-db",
+        "ServiceName": "product-db",
+        "ServiceTags": [ "app" ],
+        "ServiceAddress": "",
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 5432,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "Mode": "",
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 99,
+        "ModifyIndex": 99
+    }
+]

@@ -1,0 +1,27 @@
+{
+    "consul": [],
+    "frontend": [
+        "app"
+    ],
+    "frontend-sidecar-proxy": [
+        "app"
+    ],
+    "payments": [
+        "app"
+    ],
+    "product-api": [
+        "app"
+    ],
+    "product-api-sidecar-proxy": [
+        "app"
+    ],
+    "public-api": [
+        "app"
+    ],
+    "public-api-sidecar-proxy": [
+        "app"
+    ],
+    "product-db": [
+        "app"
+    ]
+}

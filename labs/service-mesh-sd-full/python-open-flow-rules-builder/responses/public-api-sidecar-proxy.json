@@ -1,0 +1,66 @@
+[
+    {
+        "ID": "a06b3953-c2de-77e7-9452-87cb4ee43802",
+        "Node": "da781e790f39",
+        "Address": "192.168.1.11",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.11",
+            "lan_ipv4": "192.168.1.11",
+            "wan": "192.168.1.11",
+            "wan_ipv4": "192.168.1.11"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "connect-proxy",
+        "ServiceID": "public-api-sidecar-proxy",
+        "ServiceName": "public-api-sidecar-proxy",
+        "ServiceTags": [
+            "app"
+        ],
+        "ServiceAddress": "",
+        "ServiceTaggedAddresses": {
+            "consul-virtual": {
+                "Address": "240.0.0.3",
+                "Port": 21001
+            }
+        },
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 21001,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "DestinationServiceName": "public-api",
+            "DestinationServiceID": "public-api",
+            "LocalServiceAddress": "127.0.0.1",
+            "LocalServicePort": 20863,
+            "Mode": "",
+            "Upstreams": [
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "payments",
+                    "Datacenter": "",
+                    "LocalBindPort": 9340,
+                    "MeshGateway": {}
+                },
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "product-api",
+                    "Datacenter": "",
+                    "LocalBindPort": 9341,
+                    "MeshGateway": {}
+                }
+            ],
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 36,
+        "ModifyIndex": 36
+    }
+]

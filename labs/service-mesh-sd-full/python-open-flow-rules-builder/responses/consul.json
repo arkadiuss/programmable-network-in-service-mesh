@@ -1,0 +1,46 @@
+[
+    {
+        "ID": "8d6f5838-8c14-78be-0324-cae130795878",
+        "Node": "67f86879a74d",
+        "Address": "192.168.1.250",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.250",
+            "lan_ipv4": "192.168.1.250",
+            "wan": "192.168.1.250",
+            "wan_ipv4": "192.168.1.250"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "",
+        "ServiceID": "consul",
+        "ServiceName": "consul",
+        "ServiceTags": [],
+        "ServiceAddress": "",
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {
+            "non_voter": "false",
+            "raft_version": "3",
+            "read_replica": "false",
+            "serf_protocol_current": "2",
+            "serf_protocol_max": "5",
+            "serf_protocol_min": "1",
+            "version": "1.11.4"
+        },
+        "ServicePort": 8300,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "Mode": "",
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 11,
+        "ModifyIndex": 11
+    }
+]

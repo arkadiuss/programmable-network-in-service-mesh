@@ -1,0 +1,40 @@
+[
+    {
+        "ID": "c3bd9074-ae9f-49b2-988f-998f51ab3c25",
+        "Node": "adc87e055d56",
+        "Address": "192.168.1.12",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.12",
+            "lan_ipv4": "192.168.1.12",
+            "wan": "192.168.1.12",
+            "wan_ipv4": "192.168.1.12"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "",
+        "ServiceID": "product-api",
+        "ServiceName": "product-api",
+        "ServiceTags": [
+            "app"
+        ],
+        "ServiceAddress": "",
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 19572,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "Mode": "",
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 23,
+        "ModifyIndex": 23
+    }
+]

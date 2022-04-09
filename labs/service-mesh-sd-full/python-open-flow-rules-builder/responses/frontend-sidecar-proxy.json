@@ -1,0 +1,59 @@
+[
+    {
+        "ID": "a06b3953-c2de-77e7-9452-87cb4ee43802",
+        "Node": "da781e790f39",
+        "Address": "192.168.1.11",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.11",
+            "lan_ipv4": "192.168.1.11",
+            "wan": "192.168.1.11",
+            "wan_ipv4": "192.168.1.11"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "connect-proxy",
+        "ServiceID": "frontend-sidecar-proxy",
+        "ServiceName": "frontend-sidecar-proxy",
+        "ServiceTags": [
+            "app"
+        ],
+        "ServiceAddress": "",
+        "ServiceTaggedAddresses": {
+            "consul-virtual": {
+                "Address": "240.0.0.2",
+                "Port": 21000
+            }
+        },
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 21000,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "DestinationServiceName": "frontend",
+            "DestinationServiceID": "frontend",
+            "LocalServiceAddress": "127.0.0.1",
+            "LocalServicePort": 17564,
+            "Mode": "",
+            "Upstreams": [
+                {
+                    "DestinationType": "service",
+                    "DestinationName": "public-api",
+                    "Datacenter": "",
+                    "LocalBindPort": 9191,
+                    "MeshGateway": {}
+                }
+            ],
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 32,
+        "ModifyIndex": 32
+    }
+]

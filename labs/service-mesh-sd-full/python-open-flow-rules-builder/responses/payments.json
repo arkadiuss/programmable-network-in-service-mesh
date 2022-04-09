@@ -1,0 +1,40 @@
+[
+    {
+        "ID": "5ebb3afe-49dd-0f0e-d868-b93b7781f693",
+        "Node": "aa71ba24f299",
+        "Address": "192.168.1.13",
+        "Datacenter": "dc1",
+        "TaggedAddresses": {
+            "lan": "192.168.1.13",
+            "lan_ipv4": "192.168.1.13",
+            "wan": "192.168.1.13",
+            "wan_ipv4": "192.168.1.13"
+        },
+        "NodeMeta": {
+            "consul-network-segment": ""
+        },
+        "ServiceKind": "",
+        "ServiceID": "payments",
+        "ServiceName": "payments",
+        "ServiceTags": [
+            "app"
+        ],
+        "ServiceAddress": "",
+        "ServiceWeights": {
+            "Passing": 1,
+            "Warning": 1
+        },
+        "ServiceMeta": {},
+        "ServicePort": 13427,
+        "ServiceSocketPath": "",
+        "ServiceEnableTagOverride": false,
+        "ServiceProxy": {
+            "Mode": "",
+            "MeshGateway": {},
+            "Expose": {}
+        },
+        "ServiceConnect": {},
+        "CreateIndex": 22,
+        "ModifyIndex": 22
+    }
+]
