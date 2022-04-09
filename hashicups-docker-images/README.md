@@ -4,3 +4,8 @@ To run the app:
 ```
 docker-compose up
 ```
+
+Best proof it works:
+```
+sudo docker exec <container_id> curl -Ss -X POST localhost:20863/api -H "Content-Type: application/json" --data '{"operationName":"GetCoffees", "variables":{},"query":"query GetCoffees {\n  coffees {\n    id\n    name\n    image\n    __typename\n  }\n}"}'
+```

@@ -44,7 +44,7 @@ COPY H1/public-api.hcl /register/public-api.hcl
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 ENV BIND_ADDRESS=:20863
-ENV PRODUCT_API_URI=192.168.1.250:9341
-ENV PAYMENT_API_URI=192.168.1.250:9340
+ENV PRODUCT_API_URI=http://192.168.1.250:9341
+ENV PAYMENT_API_URI=http://192.168.1.250:9340
 
 CMD ["public-api"]

@@ -36,6 +36,9 @@ services:
     depends_on:
       - db1
       - consul_server
+    environment:
+      - PRODUCT_DB_IP=db1
+      - PRODUCT_DB_PORT=5432
     networks:
       default:
         ipv4_address: 192.168.1.12
