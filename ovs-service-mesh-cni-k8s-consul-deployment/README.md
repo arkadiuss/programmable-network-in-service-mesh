@@ -18,3 +18,4 @@ kubectl apply -f k8s/
 - https://github.com/arkadiuss/ovs-service-mesh-cni/blob/main/docs/demo.md
 - https://github.com/hashicorp-demoapp/hashicups-setups/tree/main/local-k8s-consul-deployment
 - https://www.consul.io/docs/k8s/connect
+- https://github.com/tczekajlo/kube-consul-register
