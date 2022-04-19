@@ -4,6 +4,7 @@
 Run cluster:
 ```
 KUBEVIRT_NUM_NODES=2 make cluster-up
+make cluster-sync
 ```
 Config cluster:
 ```
