@@ -9,8 +9,5 @@ spec:
       "cniVersion": "0.4.0",
       "type": "ovs",
       "bridge": "br1",
-      "vlan": 100,
-      "ipam": {
-        "type": "static"
-      }
+      "vlan": 100
     }'
