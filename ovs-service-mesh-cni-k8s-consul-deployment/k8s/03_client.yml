@@ -32,7 +32,12 @@ spec:
         ovs.servicemesh.arkadiuss.dev/consul-register: 'true'
         ovs.servicemesh.arkadiuss.dev/upstreams: 'static-server:7666'
         ovs.servicemesh.arkadiuss.dev/ovs-cni-network-name: 'ovs-net-vlan-100'
-        k8s.v1.cni.cncf.io/networks: 'ovs-net-vlan-100'
+        k8s.v1.cni.cncf.io/networks: '[
+        {
+          "name": "ovs-net-vlan-100",
+          "ips": ["10.10.10.2/24"]
+        }
+]'
     spec:
       containers:
         - name: static-client

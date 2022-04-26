@@ -33,7 +33,12 @@ spec:
         consul.hashicorp.com/connect-inject: 'false'
         ovs.servicemesh.arkadiuss.dev/consul-register: 'true'
         ovs.servicemesh.arkadiuss.dev/ovs-cni-network-name: 'ovs-net-vlan-100'
-        k8s.v1.cni.cncf.io/networks: 'ovs-net-vlan-100'
+        k8s.v1.cni.cncf.io/networks: '[
+        {
+          "name": "ovs-net-vlan-100",
+          "ips": ["10.10.10.1/24"]
+        }
+]'
     spec:
       containers:
         - name: static-server

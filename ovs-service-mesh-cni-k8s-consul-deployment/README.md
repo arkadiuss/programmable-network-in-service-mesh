@@ -14,11 +14,10 @@ export KUBECONFIG=$(../../ovs-service-mesh-cni/_kubevirtci/cluster-up/kubeconfig
 Setup OpenVSwitch on each node:
 ```
 ./node_setup <ip_of_the_other_node>
-ovs-appctl -t ovsdb-server ovsdb-server/add-remote tcp:6641:0.0.0.0
 ```
 Install consul:
 ```
-consul-k8s install -auto-approve -config-file=helm/consul-values.yaml -set global.image=hashicorp/consul:1.11.4
+consul-k8s install -auto-approve -config-file=helm/consul-values.yaml -set global.image=hashicorp/consul:1.11.5
 ```
 Run `ovs-service-mesh-controller`:
 ```

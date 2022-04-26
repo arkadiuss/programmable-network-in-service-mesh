@@ -1,0 +1,17 @@
+# apiVersion: v1
+# kind: Pod
+
+# metadata:
+#   name: ovs-service-mesh-controller
+#   annotations:
+#     consul.hashicorp.com/connect-inject: 'false'
+#     k8s.v1.cni.cncf.io/networks: '[
+#     {
+#       "name": "ovs-net-vlan-management",
+#       "ips": ["10.20.20.255/24"]
+#     }
+# ]'
+# spec:
+#   containers:
+#     - name: ovs-service-mesh-controller
+#       image: localhost:49158/ovs-service-mesh-controller
