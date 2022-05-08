@@ -24,7 +24,7 @@ S3 = "s3"
 VIRTUAL_PROXY_IP = "192.168.1.250"
 
 class Infrastructure:
-    def __init__(self, hosts: list[Host], switches: list[Switch]):
+    def __init__(self, hosts: list, switches: list):
         self.hosts = hosts
         self.switches = switches
 

@@ -43,6 +43,6 @@ echo 'chmod +x /etc/scripts/add_flows.sh' >> s1.startup
 echo '/etc/scripts/add_flows.sh' >> s1.startup
 
 touch s1/etc/scripts/add_flows.sh
-echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=1,ip_dst=192.168.1.250,tp_dst=8080,action=ct(commit,zone=1,nat(dst=192.168.1.12:13427)),mod_dl_dst:00:00:00:00:00:02,output:2"' >> s1/etc/scripts/add_flows.sh
-echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ct_state=-trk,action=ct(table=0,zone=1,nat)"' >> s1/etc/scripts/add_flows.sh
-echo 'ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=60,tcp,ip_dst=192.168.1.250,tp_dst=8080,action=ct(commit,zone=1,nat(dst=192.168.1.12:13427)),mod_dl_dst:00:00:00:00:00:02,NORMAL"' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,ct_state=-trk,action=ct(table=0,zone=1,nat)"' >> s1/etc/scripts/add_flows.sh
+echo 'ovs-ofctl add-flow s1 "priority=50,tcp,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"' >> s1/etc/scripts/add_flows.sh
