@@ -1,0 +1,6 @@
+version: '3.6'
+
+services:
+  fortio-debian:
+    build: .
+    image: localhost:49158/fortio-debian:latest
