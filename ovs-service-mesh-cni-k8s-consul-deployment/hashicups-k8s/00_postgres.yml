@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: postgres
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres
+automountServiceAccountToken: true
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: postgres
+spec:
+  protocol: "tcp"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: postgres
+      app: postgres
+  template:
+    metadata:
+      labels:
+        service: postgres
+        app: postgres
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9102"
+        consul.hashicorp.com/connect-inject: "false"
+        ovs.servicemesh.arkadiuss.dev/consul-register: "true"
+        ovs.servicemesh.arkadiuss.dev/ovs-cni-network-name: "ovs-net-vlan-hashicups"
+        k8s.v1.cni.cncf.io/networks: '[
+        {
+          "name": "ovs-net-vlan-hashicups",
+          "ips": ["10.1.1.11/24"]
+        }
+]'
+    spec:
+      serviceAccountName: postgres
+      containers:
+        - name: postgres
+          image: hashicorpdemoapp/product-api-db:v0.0.21
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: products
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: password
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: "pgdata"
+          securityContext:
+            privileged: true
+      volumes:
+        - name: pgdata
+          emptyDir: {}

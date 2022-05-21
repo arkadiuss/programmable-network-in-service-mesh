@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: load-testing
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: load-testing
+  template:
+    metadata:
+      name: load-testing
+      labels:
+        app: load-testing
+      annotations:
+        consul.hashicorp.com/connect-inject: 'false'
+        ovs.servicemesh.arkadiuss.dev/consul-register: 'true'
+        ovs.servicemesh.arkadiuss.dev/upstreams: 'nginx:9099'
+        ovs.servicemesh.arkadiuss.dev/ovs-cni-network-name: 'ovs-net-vlan-hashicups'
+        k8s.v1.cni.cncf.io/networks: '[
+        {
+          "name": "ovs-net-vlan-hashicups",
+          "ips": ["10.1.1.21/24"]
+        }
+]'
+    spec:
+      containers:
+        - name: load-testing
+          image: registry:5000/fortio-debian:latest
+          securityContext:
+            privileged: true
+      # If ACLs are enabled, the serviceAccountName must match the Consul service name.
+      serviceAccountName: load-testing
