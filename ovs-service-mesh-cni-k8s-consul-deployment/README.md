@@ -10,6 +10,7 @@ Config cluster:
 ```
 export KUBEVIRT_PROVIDER=k8s-1.23
 export KUBECONFIG=$(../../ovs-service-mesh-cni/_kubevirtci/cluster-up/kubeconfig.sh)
+./cluster/kubectl.sh proxy --port=8080 --disable-filter=true &
 ```
 Setup OpenVSwitch on each node:
 ```
@@ -17,7 +18,7 @@ Setup OpenVSwitch on each node:
 ```
 Install consul:
 ```
-consul-k8s install -auto-approve -config-file=helm/consul-values.yaml -set global.image=hashicorp/consul:1.11.5
+consul-k8s install -auto-approve -config-file=helm/consul-values.yaml
 ```
 Run `ovs-service-mesh-controller`:
 ```
