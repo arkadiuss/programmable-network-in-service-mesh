@@ -24,11 +24,11 @@ def get_app_services(app_tag):
     services = fetch_services()
     return list(filter(lambda x: not x.endswith("proxy") and app_tag in services[x], services))
 
-def get_host_by_name(hosts: list[Host], name):
+def get_host_by_name(hosts: list, name):
     fil = [h for h in hosts if h.name == name]
     return None if len(fil) == 0 else fil[0]
 
-def get_host_by_ip(hosts: list[Host], ip):
+def get_host_by_ip(hosts: list, ip):
     fil = [h for h in hosts if h.ip == ip]
     return None if len(fil) == 0 else fil[0]
 
@@ -40,7 +40,7 @@ def get_instances_by_host(app_instances, host: Host):
 # ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ct_state=-trk,action=ct(table=0,zone=1,nat)"
 # ovs-ofctl add-flow s1 "priority=50,tcp,in_port=2,ip_dst=192.168.1.11,ct_state=+est,ct_zone=1,action=1"
 
-def build_instance(instance, switch: Switch, port: str, src_host: Host, hosts: list[Host]):
+def build_instance(instance, switch: Switch, port: str, src_host: Host, hosts: list):
     service_name = instance["ServiceName"]
     proxy_instances = fetch_service(service_name+"-sidecar-proxy")
     if proxy_instances == None:
@@ -59,15 +59,15 @@ def build_instance(instance, switch: Switch, port: str, src_host: Host, hosts: l
         dst_host = get_host_by_ip(hosts, dst_address)
         via_port = switch.route_table[dst_host.name]
         print(f"""ovs-ofctl add-flow {switch.name} \
-"priority=50,tcp,in_port={port},ip_dst={VIRTUAL_PROXY_IP},tp_dst={local_bind_port},\
-action=ct(commit,zone=1,nat(dst={dst_address}:{dst_port})),mod_dl_dst:{dst_host.mac},output:{via_port}"\
+"priority=60,tcp,ip_dst={VIRTUAL_PROXY_IP},tp_dst={local_bind_port},\
+action=ct(commit,zone=1,nat(dst={dst_address}:{dst_port})),mod_dl_dst:{dst_host.mac},NORMAL"\
         """)
         print(f"""ovs-ofctl add-flow {switch.name} \
-"priority=50,tcp,in_port={via_port},ct_state=-trk,\
+"priority=50,tcp,ct_state=-trk,\
 action=ct(table=0,zone=1,nat)"\
         """)
         print(f"""ovs-ofctl add-flow s1 \
-"priority=50,tcp,in_port={via_port},ip_dst={src_host.ip},ct_state=+est,ct_zone=1,\
+"priority=50,tcp,ip_dst={src_host.ip},ct_state=+est,ct_zone=1,\
 action={port}"\
         """)
 
