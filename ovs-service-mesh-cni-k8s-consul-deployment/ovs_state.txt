@@ -1,0 +1,21 @@
+ cookie=0x0, duration=271.652s, table=0, n_packets=9653, n_bytes=17445976, priority=50,ct_state=-trk,tcp actions=ct(table=0)
+ cookie=0x0, duration=355.449s, table=0, n_packets=2, n_bytes=148, priority=50,ct_state=+new+trk,tcp,nw_dst=10.1.1.254,tp_dst=10001 actions=ct(commit,nat(dst=10.1.1.11:5432)),mod_dl_dst:0a:58:0a:01:01:0b,NORMAL
+ cookie=0x0, duration=335.946s, table=0, n_packets=8, n_bytes=592, priority=50,ct_state=+new+trk,tcp,nw_dst=10.1.1.254,tp_dst=9099 actions=ct(commit,nat(dst=10.1.1.1:80)),mod_dl_dst:0a:58:0a:01:01:01,NORMAL
+ cookie=0x0, duration=284.877s, table=0, n_packets=0, n_bytes=0, priority=50,ct_state=+new+trk,tcp,nw_dst=10.1.1.254,tp_dst=9091 actions=ct(commit,nat(dst=10.1.1.4:8080)),mod_dl_dst:0a:58:0a:01:01:04,NORMAL
+ cookie=0x0, duration=271.616s, table=0, n_packets=1, n_bytes=74, priority=50,ct_state=+new+trk,tcp,nw_dst=10.1.1.254,tp_dst=9090 actions=ct(commit,nat(dst=10.1.1.3:9090)),mod_dl_dst:0a:58:0a:01:01:03,NORMAL
+ cookie=0x0, duration=355.406s, table=0, n_packets=54, n_bytes=5394, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.254,tp_dst=10001 actions=ct(nat),mod_dl_dst:0a:58:0a:01:01:0b,NORMAL
+ cookie=0x0, duration=335.902s, table=0, n_packets=1387, n_bytes=136338, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.254,tp_dst=9099 actions=ct(nat),mod_dl_dst:0a:58:0a:01:01:01,NORMAL
+ cookie=0x0, duration=284.804s, table=0, n_packets=0, n_bytes=0, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.254,tp_dst=9091 actions=ct(nat),mod_dl_dst:0a:58:0a:01:01:04,NORMAL
+ cookie=0x0, duration=271.573s, table=0, n_packets=12, n_bytes=912, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.254,tp_dst=9090 actions=ct(nat),mod_dl_dst:0a:58:0a:01:01:03,NORMAL
+ cookie=0x0, duration=354.745s, table=0, n_packets=38, n_bytes=7067, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.3 actions=ct(nat),NORMAL
+ cookie=0x0, duration=335.796s, table=0, n_packets=1873, n_bytes=8460568, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.21 actions=ct(nat),NORMAL
+ cookie=0x0, duration=270.155s, table=0, n_packets=11, n_bytes=3164, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.2 actions=ct(nat),NORMAL
+ cookie=0x0, duration=1126.550s, table=0, n_packets=6571, n_bytes=8847219, priority=0 actions=NORMAL
+
+  cookie=0x0, duration=1138.916s, table=0, n_packets=120103, n_bytes=139000996, priority=50,ct_state=-trk,tcp actions=ct(table=0)
+ cookie=0x0, duration=1148.812s, table=0, n_packets=3051, n_bytes=225774, priority=50,ct_state=+new+trk,tcp,nw_dst=10.1.1.254,tp_dst=7002 actions=ct(commit,nat(dst=10.1.1.5:3000)),mod_dl_dst:0a:58:0a:01:01:05,NORMAL
+ cookie=0x0, duration=1138.874s, table=0, n_packets=2320, n_bytes=171680, priority=50,ct_state=+new+trk,tcp,nw_dst=10.1.1.254,tp_dst=7001 actions=ct(commit,nat(dst=10.1.1.2:8080)),mod_dl_dst:0a:58:0a:01:01:02,NORMAL
+ cookie=0x0, duration=1148.764s, table=0, n_packets=23704, n_bytes=2290493, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.254,tp_dst=7002 actions=ct(nat),mod_dl_dst:0a:58:0a:01:01:05,NORMAL
+ cookie=0x0, duration=1138.827s, table=0, n_packets=11668, n_bytes=1220635, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.254,tp_dst=7001 actions=ct(nat),mod_dl_dst:0a:58:0a:01:01:02,NORMAL
+ cookie=0x0, duration=1138.773s, table=0, n_packets=31043, n_bytes=66402627, priority=50,ct_state=+est+trk,tcp,nw_dst=10.1.1.1 actions=ct(nat),NORMAL
+ cookie=0x0, duration=1975.851s, table=0, n_packets=48617, n_bytes=68706191, priority=0 actions=NORMAL
