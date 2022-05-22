@@ -10,6 +10,7 @@ spec:
       "type": "ovs",
       "bridge": "br1",
       "vlan": 100,
+      "mtu": 1430,
       "ipam": {
         "type": "static"
       }
