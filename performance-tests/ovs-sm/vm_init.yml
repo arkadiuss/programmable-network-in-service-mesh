@@ -1,0 +1,16 @@
+#cloud-config
+package_upgrade: true
+apt_mirror: https://apt.kubernetes.io/
+packages:
+  - apt-transport-https 
+  - ca-certificates 
+  - curl
+  - kubelet 
+  - kubeadm 
+  - kubectl
+# runcmd:
+#   - service nginx restart
+#   - cd "/home/azureuser/myapp"
+#   - npm init
+#   - npm install express -y
+#   - nodejs index.js

@@ -1,0 +1,3 @@
+locals {
+  prefix = "ovs-sm"
+}
