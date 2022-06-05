@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: load-testing
-          image: registry:5000/fortio-debian:latest
+          image: akrausagh/fortio-debian:latest
           securityContext:
             privileged: true
       # If ACLs are enabled, the serviceAccountName must match the Consul service name.

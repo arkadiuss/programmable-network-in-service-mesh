@@ -51,5 +51,3 @@ spec:
               name: http
       # If ACLs are enabled, the serviceAccountName must match the Consul service name.
       serviceAccountName: static-server
-      nodeSelector:
-        kubernetes.io/hostname: node01

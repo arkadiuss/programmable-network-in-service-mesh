@@ -34,7 +34,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "k8s_cluster" {
   name                = "${local.prefix}-vmss"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
-  sku                 = "Standard_B2s"
+  sku                 = "Standard_B2ms"
   instances           = 2
   admin_username      = "adminuser"
   custom_data         = filebase64("./vm_init.yml")

@@ -140,34 +140,52 @@ packages:
   - kubectl
   - openvswitch-switch
   - openvswitch-common 
+  - unzip
 write_files:
-  - owner: adminuser:adminuser
-    path: /home/adminuser/ovs-network.yml
-    content: |
-      apiVersion: "k8s.cni.cncf.io/v1"
-      kind: NetworkAttachmentDefinition
-      metadata:
-        name: ovs-conf
-        annotations:
-          k8s.v1.cni.cncf.io/resourceName: ovs-cni.network.kubevirt.io/br1
-      spec:
-        config: '{
-            "cniVersion": "0.4.0",
-            "type": "ovs",
-            "bridge": "br1",
-            "vlan": 100
-          }'
-  - owner: adminuser:adminuser
-    path: /home/adminuser/master.sh
+  - path: /opt/scripts/master.sh
     content: |
       sudo kubeadm init
       sudo mkdir -p $HOME/.kube
       sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
       sudo chown $(id -u):$(id -g) $HOME/.kube/config
       sudo ovs-vsctl add-br br1
-      kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick-plugin.yml
-      kubectl apply -f /home/adminuser/ovs-network.yml
       kubectl taint nodes --all node-role.kubernetes.io/control-plane- node-role.kubernetes.io/master-
+      kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+      # kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick-plugin.yml
+      kubectl apply -f https://github.com/kubevirt/cluster-network-addons-operator/releases/download/v0.77.0/namespace.yaml
+      kubectl apply -f https://github.com/kubevirt/cluster-network-addons-operator/releases/download/v0.77.0/network-addons-config.crd.yaml
+      kubectl apply -f https://github.com/kubevirt/cluster-network-addons-operator/releases/download/v0.77.0/operator.yaml
+      kubectl apply -f /home/adminuser/scripts/pod-network.yml
+      kubectl wait networkaddonsconfig cluster --for condition=Available
+    permissions: "0744"
+  - path: /opt/scripts/kublet.sh
+    content: |
+      sudo ovs-vsctl add-br br1
+    permissions: "0744"
+  - path: /opt/scripts/pod-network.yml
+    content: |
+      apiVersion: networkaddonsoperator.network.kubevirt.io/v1
+      kind: NetworkAddonsConfig
+      metadata:
+        name: cluster
+      spec:
+        multus: {}
+        ovs: {}
+    permissions: "0744"
+  - path: /run/flannel/subnet.env
+    content: |
+      FLANNEL_NETWORK=10.244.0.0/16
+      FLANNEL_SUBNET=10.244.0.1/24
+      FLANNEL_MTU=1340
+      FLANNEL_IPMASQ=true
 runcmd:
   - rm /etc/containerd/config.toml # https://github.com/containerd/containerd/issues/4581
   - systemctl restart containerd
+  - mkdir -p /home/adminuser/scripts
+  - cp /opt/scripts/master.sh /home/adminuser/scripts/master.sh
+  - cp /opt/scripts/kublet.sh /home/adminuser/scripts/kublet.sh
+  - cp /opt/scripts/pod-network.yml /home/adminuser/scripts/pod-network.yml
+  - chown adminuser:adminuser -R /home/adminuser/scripts/
+  - wget https://github.com/flannel-io/flannel/releases/download/v0.18.0/flanneld-amd64 -O /opt/bin/flanneld
+  - wget https://github.com/arkadiuss/programmable-network-in-service-mesh/archive/refs/heads/main.zip -O /home/adminuser/code.zip 
+  - chown adminuser:adminuser -R /home/adminuser/code.zip
