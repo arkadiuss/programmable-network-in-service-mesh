@@ -17,10 +17,15 @@ resource "azurerm_bastion_host" "k8s_cluster_bastion" {
   name                = "${local.prefix}-bastion"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
+  sku                 = "Standard"
+
+  tunneling_enabled = true
 
   ip_configuration {
     name                 = "${local.prefix}-ip-configuration"
     subnet_id            = azurerm_subnet.bastion.id
     public_ip_address_id = azurerm_public_ip.k8s_cluster_bastion_ip.id
   }
+
+
 }

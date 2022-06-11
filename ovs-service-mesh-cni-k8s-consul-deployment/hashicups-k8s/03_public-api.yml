@@ -18,13 +18,6 @@ metadata:
   name: public-api
 automountServiceAccountToken: true
 ---
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: public-api
-spec:
-  protocol: "http"
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -70,3 +63,4 @@ spec:
               value: "http://10.1.1.254:9091"
           securityContext:
             privileged: true
+            runAsUser: 0

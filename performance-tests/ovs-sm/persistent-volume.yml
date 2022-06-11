@@ -1,0 +1,43 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-volume
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  local:
+    path: "/mnt/k8s"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - ovs-sm-vmss000000
+          - ovs-sm-vmss000001
+          - ovs-sm-vmss000002
+          - ovs-sm-vmss000003
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: data-consul-consul-server-0
+  namespace: consul
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 1Gi

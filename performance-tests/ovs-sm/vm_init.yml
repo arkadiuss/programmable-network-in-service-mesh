@@ -157,6 +157,8 @@ write_files:
       kubectl apply -f https://github.com/kubevirt/cluster-network-addons-operator/releases/download/v0.77.0/operator.yaml
       kubectl apply -f /home/adminuser/scripts/pod-network.yml
       kubectl wait networkaddonsconfig cluster --for condition=Available
+      kubectl apply -f /home/adminuser/scripts/persistent-volume.yml
+      kubectl apply -f /home/adminuser/scripts/pod-network.yml
     permissions: "0744"
   - path: /opt/scripts/kublet.sh
     content: |
@@ -171,6 +173,81 @@ write_files:
       spec:
         multus: {}
         ovs: {}
+  - path: /opt/scripts/persistent-volume.yml
+    content: |
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        name: local-storage
+      provisioner: kubernetes.io/no-provisioner
+      volumeBindingMode: WaitForFirstConsumer
+      ---
+      apiVersion: v1
+      kind: PersistentVolume
+      metadata:
+        name: data-volume
+      spec:
+        storageClassName: local-storage
+        accessModes:
+          - ReadWriteOnce
+        capacity:
+          storage: 20Gi
+        local:
+          path: "/mnt/k8s"
+        nodeAffinity:
+          required:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - ovs-sm-vmss000000
+                - ovs-sm-vmss000001
+                - ovs-sm-vmss000002
+                - ovs-sm-vmss000003
+      # ---
+      # kind: PersistentVolumeClaim
+      # apiVersion: v1
+      # metadata:
+      #   name: data-consul-consul-server-0
+      #   namespace: consul
+      # spec:
+      #   accessModes:
+      #   - ReadWriteOnce
+      #   storageClassName: local-storage
+      #   resources:
+      #     requests:
+      #       storage: 1Gi
+    permissions: "0744"
+  - path: /opt/scripts/pod-security-policy.yml
+    content: |
+      apiVersion: policy/v1beta1
+      kind: PodSecurityPolicy
+      metadata:
+        name: privileged
+        annotations:
+          seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+      spec:
+        privileged: true
+        allowPrivilegeEscalation: true
+        allowedCapabilities:
+        - '*'
+        volumes:
+        - '*'
+        hostNetwork: true
+        hostPorts:
+        - min: 0
+          max: 65535
+        hostIPC: true
+        hostPID: true
+        runAsUser:
+          rule: 'RunAsAny'
+        seLinux:
+          rule: 'RunAsAny'
+        supplementalGroups:
+          rule: 'RunAsAny'
+        fsGroup:
+          rule: 'RunAsAny'
     permissions: "0744"
   - path: /run/flannel/subnet.env
     content: |
@@ -185,6 +262,8 @@ runcmd:
   - cp /opt/scripts/master.sh /home/adminuser/scripts/master.sh
   - cp /opt/scripts/kublet.sh /home/adminuser/scripts/kublet.sh
   - cp /opt/scripts/pod-network.yml /home/adminuser/scripts/pod-network.yml
+  - cp /opt/scripts/pod-security-policy.yml /home/adminuser/scripts/pod-security-policy.yml
+  - cp /opt/scripts/persistent-volume.yml /home/adminuser/scripts/persistent-volume.yml
   - chown adminuser:adminuser -R /home/adminuser/scripts/
   - wget https://github.com/flannel-io/flannel/releases/download/v0.18.0/flanneld-amd64 -O /opt/bin/flanneld
   - wget https://github.com/arkadiuss/programmable-network-in-service-mesh/archive/refs/heads/main.zip -O /home/adminuser/code.zip 

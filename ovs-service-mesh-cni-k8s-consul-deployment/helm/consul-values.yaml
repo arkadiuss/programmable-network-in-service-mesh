@@ -4,6 +4,7 @@ global:
   datacenter: dc1
 server:
   replicas: 1
+  storageClass: local-storage
 ui:
   enabled: true
 connectInject:

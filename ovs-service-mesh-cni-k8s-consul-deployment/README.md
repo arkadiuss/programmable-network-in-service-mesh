@@ -29,6 +29,9 @@ Apply app:
 ```
 kubectl apply -f k8s/
 ```
+```
+kubectl get pods --output=name | cut -f 2 -d '/' | xargs -I {} kubectl exec {} -- arp -s 10.1.1.254 00:00:00:00:00:01
+```
 
 ## Based on
 - https://github.com/arkadiuss/ovs-service-mesh-cni/blob/main/docs/demo.md
