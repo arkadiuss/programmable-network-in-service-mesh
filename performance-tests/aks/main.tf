@@ -25,15 +25,11 @@ resource "azurerm_kubernetes_cluster" "ovssm" {
   default_node_pool {
     name       = "default"
     node_count = 2
-    vm_size    = "Standard_D2_v2"
+    vm_size    = "Standard_B2ms"
   }
 
   identity {
     type = "SystemAssigned"
-  }
-
-  tags = {
-    Environment = "Production"
   }
 }
 
@@ -45,4 +41,12 @@ output "client_certificate" {
 output "kube_config" {
   value = azurerm_kubernetes_cluster.ovssm.kube_config_raw
   sensitive = true
+}
+
+output "resource_group_name" {
+  value     = azurerm_resource_group.main.name
+}
+
+output "kubernetes_cluster_name" {
+  value = azurerm_kubernetes_cluster.ovssm.name
 }
